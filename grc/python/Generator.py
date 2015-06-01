@@ -129,6 +129,9 @@ class TopBlockGenerator(object):
         # when in no gui mode on linux, use a graphical terminal (looks nice)
         xterm_executable = find_executable(XTERM_EXECUTABLE)
         if self._generate_options == 'no_gui' and xterm_executable:
+            # "python -u ..." argument to "xterm -e" should be treated as
+            # all one argument
+	    cmds = ['%s -u %s' % (python_exe, self.get_file_path())]
             cmds = [xterm_executable, '-e'] + cmds
 
         p = subprocess.Popen(
